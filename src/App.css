@@ -94,6 +94,42 @@
   color: #38546f;
 }
 
+.seal-levels-info {
+  margin-bottom: 1rem;
+  padding: 0.68rem 0.8rem;
+  border: 1px solid #d9e6f2;
+  border-radius: 12px;
+  background: #f7fbff;
+}
+
+.seal-levels-info summary {
+  cursor: pointer;
+  font-weight: 700;
+  color: #1d5573;
+}
+
+.seal-levels-info[open] summary {
+  margin-bottom: 0.6rem;
+}
+
+.seal-levels-info ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 0.55rem;
+}
+
+.seal-levels-info li {
+  display: grid;
+  gap: 0.2rem;
+}
+
+.seal-levels-info li span {
+  color: #4a667e;
+  font-size: 0.86rem;
+}
+
 .quick-fill {
   display: flex;
   gap: 0.55rem;

@@ -94,4 +94,4 @@ sequenceDiagram
 == Source Standard
 
 - European Commission, Cloud Sovereignty Framework v1.2.1 (Oct 2025):
-  https://commission.europa.eu/document/download/09579818-64a6-4dd5-9577-446ab6219113_en?filename=Cloud-Sovereignty-Framework.pdf
+    https://commission.europa.eu/document/09579818-64a6-4dd5-9577-446ab6219113_en

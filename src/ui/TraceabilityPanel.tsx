@@ -24,7 +24,7 @@ export function TraceabilityPanel({ framework }: TraceabilityPanelProps) {
       <p>
         Source standard:{' '}
         <a href={framework.sourceUrl} target="_blank" rel="noreferrer">
-          {framework.title} PDF
+          {framework.title} document
         </a>
       </p>
 

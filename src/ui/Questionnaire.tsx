@@ -29,6 +29,20 @@ export function Questionnaire({ framework, register, onFillAll }: QuestionnaireP
         </p>
       </div>
 
+      <details className="seal-levels-info">
+        <summary>SEAL levels reference</summary>
+        <ul>
+          {framework.sealLevels.map((sealLevel) => (
+            <li key={`seal-level-${sealLevel.level}`}>
+              <strong>
+                SEAL-{sealLevel.level}: {sealLevel.label}
+              </strong>
+              <span>{sealLevel.description}</span>
+            </li>
+          ))}
+        </ul>
+      </details>
+
       <div className="quick-fill" role="group" aria-label="Quick fill scenarios">
         <button type="button" onClick={() => onFillAll(1)}>
           Fill Low Baseline

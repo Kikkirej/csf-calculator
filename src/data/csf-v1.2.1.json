@@ -2,7 +2,7 @@
   "version": "1.2.1",
   "title": "Cloud Sovereignty Framework",
   "publicationDate": "2025-10",
-  "sourceUrl": "https://commission.europa.eu/document/download/09579818-64a6-4dd5-9577-446ab6219113_en?filename=Cloud-Sovereignty-Framework.pdf",
+  "sourceUrl": "https://commission.europa.eu/document/09579818-64a6-4dd5-9577-446ab6219113_en",
   "scoring": {
     "sourceSection": "Section 5",
     "formula": "sum((score(SOVn)/max_score(SOVn))*weight(SOVn)), n=1..8",

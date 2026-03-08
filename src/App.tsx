@@ -52,8 +52,6 @@ function App() {
     <div className="app-shell">
       <header className="hero">
         <div className="badge-row">
-          <span className="badge">Single-page calculator</span>
-          <span className="badge">GitHub Pages ready</span>
           <span className="badge">CSF v{csfFramework.version}</span>
         </div>
         <h1>Cloud Sovereignty Calculator</h1>
@@ -67,7 +65,7 @@ function App() {
           target="_blank"
           rel="noreferrer"
         >
-          Open official Cloud Sovereignty Framework PDF
+          Open official Cloud Sovereignty Framework document
         </a>
       </header>
 

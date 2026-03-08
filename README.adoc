@@ -7,7 +7,7 @@ This repository will host a single-page application (SPA) that calculates a clou
 
 == Normative Reference
 
-- Cloud Sovereignty Framework PDF: https://commission.europa.eu/document/download/09579818-64a6-4dd5-9577-446ab6219113_en?filename=Cloud-Sovereignty-Framework.pdf
+- Cloud Sovereignty Framework document: https://commission.europa.eu/document/09579818-64a6-4dd5-9577-446ab6219113_en
 The framework defines:
 
 1. Sovereignty Objectives `SOV-1` to `SOV-8`.
@@ -100,14 +100,14 @@ flowchart TD
     Engine[Scoring Engine]
     Results[Results and traceability]
     Source[CSF v1.2.1 data pack]
-    Pdf[Official CSF PDF]
+    Doc[Official CSF document page]
     User --> App
     App --> Forms
     Forms --> Engine
     Source --> Engine
     Engine --> Results
     Results --> User
-    Source -. references .-> Pdf
+    Source -. references .-> Doc
 ....
 
 == Planned Repository Structure
