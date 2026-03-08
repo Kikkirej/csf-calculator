@@ -1,0 +1,97 @@
+= Architecture Plan
+:toc:
+:toclevels: 4
+:sectnums:
+
+This document describes the architecture for the Sovereignty Calculator SPA and explains why the selected stack fits a transparent, auditable scoring workflow based on the CSF.
+
+== Architectural Goals
+
+- Deterministic calculations: same inputs always produce the same score.
+- Traceability: every output can point back to a CSF section and objective.
+- Updatability: framework versions can be swapped without rewriting UI logic.
+- Static delivery: no backend requirement, suitable for GitHub Pages.
+- Testability: score math and edge cases covered by automated tests.
+
+== Runtime and Deployment Model
+
+- Runtime: browser-only SPA (React + TypeScript).
+- Build: Vite bundles static assets.
+- Hosting: GitHub Pages serves versioned artifacts.
+- CI/CD: GitHub Actions builds on push to `main` and publishes `dist/`.
+
+[mermaid]
+....
+flowchart LR
+    subgraph Browser[Browser SPA]
+        UI[Questionnaire UI]
+        State[App state]
+        Score[Scoring service]
+        Explain[Rationale mapper]
+        Report[Result renderer]
+    end
+    Data[csf-v1.2.1.json]
+    UI --> State
+    State --> Score
+    Score --> State
+    State --> Explain
+    Explain --> Report
+    State --> Report
+    Data --> Score
+    Data --> Explain
+....
+
+== Domain Model
+
+- `SOVObjective`: `SOV-1` through `SOV-8`, each with question set and weight.
+- `SEALLevel`: `SEAL-0` to `SEAL-4` with objective-level minimum thresholds.
+- `QuestionScore`: earned points, max points, evidence tag.
+- `ObjectiveResult`: normalized objective score plus threshold pass or fail.
+- `GlobalResult`: weighted total score, objective breakdown, and blockers.
+
+== Scoring Pipeline
+
+1. Load and validate framework JSON using Zod.
+2. Normalize UI answers into typed `QuestionScore` values.
+3. Compute objective results from raw question points.
+4. Apply CSF weights for global score.
+5. Evaluate SEAL minimum requirements and rejection conditions.
+6. Map each result to source references for auditability.
+
+[mermaid]
+....
+sequenceDiagram
+    actor User
+    participant UI as Questionnaire UI
+    participant State as App State
+    participant Scorer as Scoring Engine
+    participant Mapper as Reference Mapper
+    User->>UI: Answer objective questions
+    UI->>State: Persist normalized answers
+    State->>Scorer: Recompute objective scores
+    Scorer-->>State: Return SOV1..SOV8, score, and SEAL checks
+    State->>Mapper: Request source references
+    Mapper-->>UI: Return section links for each output
+    UI-->>User: Display score, SEAL, and rationale
+....
+
+== Test Strategy
+
+- Unit tests (Vitest): formula correctness, weight sum checks, rounding rules, and SEAL threshold gating.
+- Contract tests: framework JSON schema validation.
+- Optional E2E tests (Playwright): end-to-end input-to-result workflow.
+
+== Key Risks and Mitigations
+
+[cols="1,2",options="header"]
+|===
+|Risk |Mitigation
+|Framework updates break assumptions |Version framework data files and include schema version checks.
+|Opaque results reduce trust |Expose objective breakdown and source references in UI.
+|Calculation regressions |Lock formula behavior with unit tests and CI.
+|===
+
+== Source Standard
+
+- European Commission, Cloud Sovereignty Framework v1.2.1 (Oct 2025):
+  https://commission.europa.eu/document/download/09579818-64a6-4dd5-9577-446ab6219113_en?filename=Cloud-Sovereignty-Framework.pdf

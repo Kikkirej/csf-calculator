@@ -1,0 +1,101 @@
+= Sovereignty Calculator SPA
+:toc:
+:toclevels: 3
+:sectnums:
+
+This repository will host a single-page application (SPA) that calculates a cloud sovereignty result aligned with the European Commission Cloud Sovereignty Framework (CSF), Version 1.2.1 (Oct 2025). The app is intended for static hosting on GitHub Pages.
+
+== Normative Reference
+
+- Cloud Sovereignty Framework PDF: https://commission.europa.eu/document/download/09579818-64a6-4dd5-9577-446ab6219113_en?filename=Cloud-Sovereignty-Framework.pdf
+The framework defines:
+
+1. Sovereignty Objectives `SOV-1` to `SOV-8`.
+2. Sovereignty Effectiveness Assurance Levels `SEAL-0` to `SEAL-4`.
+3. A weighted Sovereignty Score computation model.
+
+== Recommended Tech Stack
+
+[cols="1,3",options="header"]
+|===
+|Technology |Motivation
+|Vite |Fast build and dev workflow with static `dist/` output that fits GitHub Pages.
+|React |Component model for questionnaire flows and rich result views in one page.
+|TypeScript |Type-safe domain model for objectives, answers, and score calculations.
+|Zod |Runtime validation for framework data files and user answer payloads.
+|React Hook Form |Efficient handling of multi-section forms with validation.
+|Vitest |Fast unit tests for deterministic scoring logic.
+|GitHub Actions + GitHub Pages |Simple CI/CD pipeline for automated static deployments.
+|===
+
+== Scoring Scope from the CSF
+
+The app will compute:
+
+1. Objective-level outcomes for `SOV-1` through `SOV-8`.
+2. A global Sovereignty Score using CSF Section 5 weights.
+3. Minimum-assurance eligibility checks using SEAL requirements.
+
+[source,text]
+----
+sovereignty_score = sum((score(SOVn) / max_score(SOVn)) * weight(SOVn)), n = 1..8
+----
+
+[cols="1,1",options="header"]
+|===
+|Objective |Weight
+|SOV-1 Strategic Sovereignty |15%
+|SOV-2 Legal and Jurisdictional Sovereignty |10%
+|SOV-3 Data and AI Sovereignty |10%
+|SOV-4 Operational Sovereignty |15%
+|SOV-5 Supply Chain Sovereignty |20%
+|SOV-6 Technology Sovereignty |15%
+|SOV-7 Security and Compliance Sovereignty |10%
+|SOV-8 Environmental Sustainability |5%
+|===
+
+== Delivery Plan
+
+1. Model the framework as versioned JSON data (`csf-v1.2.1.json`).
+2. Implement a pure scoring engine with tests.
+3. Build one-page UI for inputs, results, and traceability references.
+4. Add CI workflow to build and publish to GitHub Pages.
+5. Version the data model to support future CSF updates without UI rewrites.
+
+== Solution Overview
+
+[mermaid]
+....
+flowchart TD
+    User[Evaluator]
+    App[SPA on GitHub Pages]
+    Forms[Questionnaire by SOV objective]
+    Engine[Scoring Engine]
+    Results[Results and traceability]
+    Source[CSF v1.2.1 data pack]
+    Pdf[Official CSF PDF]
+    User --> App
+    App --> Forms
+    Forms --> Engine
+    Source --> Engine
+    Engine --> Results
+    Results --> User
+    Source -. references .-> Pdf
+....
+
+== Planned Repository Structure
+
+[source,text]
+----
+src/
+  data/
+    csf-v1.2.1.json
+    sources.ts
+  domain/
+    types.ts
+    scoring.ts
+  ui/
+    Questionnaire.tsx
+    ResultsPanel.tsx
+    TraceabilityPanel.tsx
+----
