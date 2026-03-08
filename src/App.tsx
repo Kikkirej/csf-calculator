@@ -28,12 +28,23 @@ interface ProviderExampleProfile {
   objectiveScores: ObjectiveExampleScores
 }
 
-const providerExampleOptions: ProviderExampleOption[] = [
+const primaryProviderExampleOptions: ProviderExampleOption[] = [
   { id: 'azure', label: 'Azure' },
   { id: 'open-telekom-cloud', label: 'Open Telekom Cloud' },
   { id: 'aws', label: 'AWS' },
   { id: 'hetzner', label: 'Hetzner' },
   { id: 'google-cloud', label: 'Google Cloud' },
+]
+
+const additionalProviderExampleOptions: ProviderExampleOption[] = [
+  { id: 'ovhcloud', label: 'OVHcloud' },
+  { id: 'scaleway', label: 'Scaleway' },
+  { id: 'ionos-cloud', label: 'IONOS Cloud' },
+  { id: 'stackit', label: 'STACKIT' },
+  { id: 'aruba-cloud', label: 'Aruba Cloud' },
+  { id: 'exoscale', label: 'Exoscale' },
+  { id: 'oracle-cloud-infrastructure', label: 'Oracle Cloud Infrastructure (OCI)' },
+  { id: 'ibm-cloud', label: 'IBM Cloud' },
 ]
 
 const providerExampleProfiles: Record<ProviderExampleId, ProviderExampleProfile> = {
@@ -97,6 +108,102 @@ const providerExampleProfiles: Record<ProviderExampleId, ProviderExampleProfile>
       'SOV-8': [4, 4, 4],
     },
   },
+  ovhcloud: {
+    objectiveScores: {
+      'SOV-1': [4, 4, 4],
+      'SOV-2': [4, 4, 4],
+      'SOV-3': [3, 4, 3],
+      'SOV-4': [4, 4, 3],
+      'SOV-5': [3, 3, 3],
+      'SOV-6': [4, 3, 3],
+      'SOV-7': [3, 3, 3],
+      'SOV-8': [4, 4, 3],
+    },
+  },
+  scaleway: {
+    objectiveScores: {
+      'SOV-1': [4, 4, 3],
+      'SOV-2': [4, 4, 4],
+      'SOV-3': [3, 4, 3],
+      'SOV-4': [3, 4, 3],
+      'SOV-5': [3, 3, 3],
+      'SOV-6': [4, 4, 3],
+      'SOV-7': [3, 3, 3],
+      'SOV-8': [4, 4, 4],
+    },
+  },
+  'ionos-cloud': {
+    objectiveScores: {
+      'SOV-1': [4, 4, 4],
+      'SOV-2': [4, 4, 4],
+      'SOV-3': [4, 4, 3],
+      'SOV-4': [4, 4, 4],
+      'SOV-5': [3, 3, 3],
+      'SOV-6': [3, 3, 3],
+      'SOV-7': [4, 4, 4],
+      'SOV-8': [3, 3, 3],
+    },
+  },
+  stackit: {
+    objectiveScores: {
+      'SOV-1': [4, 4, 3],
+      'SOV-2': [4, 4, 4],
+      'SOV-3': [3, 3, 3],
+      'SOV-4': [3, 3, 3],
+      'SOV-5': [3, 3, 2],
+      'SOV-6': [3, 3, 3],
+      'SOV-7': [3, 3, 3],
+      'SOV-8': [3, 3, 3],
+    },
+  },
+  'aruba-cloud': {
+    objectiveScores: {
+      'SOV-1': [4, 4, 3],
+      'SOV-2': [4, 4, 4],
+      'SOV-3': [3, 3, 3],
+      'SOV-4': [3, 3, 3],
+      'SOV-5': [3, 3, 2],
+      'SOV-6': [3, 3, 3],
+      'SOV-7': [3, 3, 3],
+      'SOV-8': [4, 4, 3],
+    },
+  },
+  exoscale: {
+    objectiveScores: {
+      'SOV-1': [3, 3, 3],
+      'SOV-2': [4, 4, 3],
+      'SOV-3': [3, 3, 3],
+      'SOV-4': [3, 3, 3],
+      'SOV-5': [2, 2, 2],
+      'SOV-6': [3, 3, 3],
+      'SOV-7': [3, 3, 3],
+      'SOV-8': [3, 3, 3],
+    },
+  },
+  'oracle-cloud-infrastructure': {
+    objectiveScores: {
+      'SOV-1': [1, 1, 2],
+      'SOV-2': [1, 1, 1],
+      'SOV-3': [2, 2, 2],
+      'SOV-4': [2, 2, 2],
+      'SOV-5': [1, 1, 2],
+      'SOV-6': [2, 2, 2],
+      'SOV-7': [3, 3, 2],
+      'SOV-8': [3, 3, 3],
+    },
+  },
+  'ibm-cloud': {
+    objectiveScores: {
+      'SOV-1': [1, 1, 2],
+      'SOV-2': [1, 1, 1],
+      'SOV-3': [2, 2, 2],
+      'SOV-4': [2, 2, 2],
+      'SOV-5': [1, 1, 2],
+      'SOV-6': [2, 2, 2],
+      'SOV-7': [3, 3, 3],
+      'SOV-8': [3, 3, 3],
+    },
+  },
 }
 
 function App() {
@@ -157,7 +264,8 @@ function App() {
         <Questionnaire
           framework={csfFramework}
           register={register}
-          providerExamples={providerExampleOptions}
+          primaryProviderExamples={primaryProviderExampleOptions}
+          additionalProviderExamples={additionalProviderExampleOptions}
           onApplyProviderExample={handleApplyProviderExample}
         />
 

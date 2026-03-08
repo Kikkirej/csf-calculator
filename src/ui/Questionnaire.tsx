@@ -8,6 +8,14 @@ export type ProviderExampleId =
   | 'aws'
   | 'hetzner'
   | 'google-cloud'
+  | 'ovhcloud'
+  | 'scaleway'
+  | 'ionos-cloud'
+  | 'stackit'
+  | 'aruba-cloud'
+  | 'exoscale'
+  | 'oracle-cloud-infrastructure'
+  | 'ibm-cloud'
 
 export interface ProviderExampleOption {
   id: ProviderExampleId
@@ -27,14 +35,16 @@ const sealOptions = [0, 1, 2, 3, 4]
 interface QuestionnaireProps {
   framework: CsfFramework
   register: UseFormRegister<CalculatorFormValues>
-  providerExamples: ProviderExampleOption[]
+  primaryProviderExamples: ProviderExampleOption[]
+  additionalProviderExamples: ProviderExampleOption[]
   onApplyProviderExample: (providerId: ProviderExampleId) => void
 }
 
 export function Questionnaire({
   framework,
   register,
-  providerExamples,
+  primaryProviderExamples,
+  additionalProviderExamples,
   onApplyProviderExample,
 }: QuestionnaireProps) {
   return (
@@ -62,7 +72,7 @@ export function Questionnaire({
       </details>
 
       <div className="quick-fill" role="group" aria-label="Provider example scenarios">
-        {providerExamples.map((providerExample) => (
+        {primaryProviderExamples.map((providerExample) => (
           <button
             key={providerExample.id}
             type="button"
@@ -71,6 +81,25 @@ export function Questionnaire({
             {providerExample.label}
           </button>
         ))}
+
+        <details className="provider-dropdown">
+          <summary aria-label="More provider examples">...</summary>
+          <div className="provider-dropdown-menu" role="menu">
+            {additionalProviderExamples.map((providerExample) => (
+              <button
+                key={providerExample.id}
+                type="button"
+                role="menuitem"
+                onClick={(event) => {
+                  onApplyProviderExample(providerExample.id)
+                  event.currentTarget.closest('details')?.removeAttribute('open')
+                }}
+              >
+                {providerExample.label}
+              </button>
+            ))}
+          </div>
+        </details>
       </div>
 
       {framework.objectives.map((objective) => (

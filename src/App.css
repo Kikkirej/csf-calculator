@@ -150,6 +150,61 @@
   border-color: #0f4d6f;
 }
 
+.provider-dropdown {
+  position: relative;
+}
+
+.provider-dropdown summary {
+  list-style: none;
+  border: 1px solid #9cbad6;
+  background: #f4f9ff;
+  color: #0f4d6f;
+  border-radius: 10px;
+  font-weight: 700;
+  padding: 0.48rem 0.72rem;
+  cursor: pointer;
+  line-height: 1;
+}
+
+.provider-dropdown summary:hover {
+  border-color: #0f4d6f;
+}
+
+.provider-dropdown summary::-webkit-details-marker {
+  display: none;
+}
+
+.provider-dropdown-menu {
+  position: absolute;
+  top: calc(100% + 0.35rem);
+  right: 0;
+  min-width: 240px;
+  padding: 0.45rem;
+  border: 1px solid #b8ccdf;
+  border-radius: 10px;
+  background: #ffffff;
+  box-shadow: 0 10px 26px rgba(28, 52, 76, 0.16);
+  z-index: 5;
+  display: grid;
+  gap: 0.25rem;
+}
+
+.provider-dropdown-menu button {
+  width: 100%;
+  text-align: left;
+  border: 1px solid transparent;
+  border-radius: 8px;
+  background: transparent;
+  color: #103f59;
+  font-weight: 600;
+  padding: 0.42rem 0.46rem;
+}
+
+.provider-dropdown-menu button:hover {
+  border-color: #d4e2ef;
+  background: #f4f9ff;
+}
+
 .objective-card {
   border: 1px solid #dde5ee;
   border-radius: 14px;
