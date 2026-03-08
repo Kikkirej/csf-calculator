@@ -17,13 +17,14 @@ export function SharePanel({
         <h2>Share Options</h2>
         <p>
           Generate a link that restores all scores with parameters like{' '}
-          <code>Sov1.1=&lt;value&gt;</code>, or export the current view as PDF.
+          <code>Sov1.1=&lt;value&gt;</code>, or export a short overview optimized
+          for PDF.
         </p>
       </div>
 
       <div className="share-actions">
         <button type="button" onClick={onCopyShareLink}>
-          Copy Prefilled Link
+          Copy Link
         </button>
         <button type="button" onClick={onExportPdf}>
           PDF Export
@@ -31,7 +32,7 @@ export function SharePanel({
       </div>
 
       <label className="share-link-label" htmlFor="prefilled-link-input">
-        Prefilled Link
+        Link
       </label>
       <input
         id="prefilled-link-input"

@@ -144,6 +144,9 @@
   border-radius: 10px;
   font-weight: 600;
   padding: 0.48rem 0.72rem;
+  min-height: 2.15rem;
+  display: inline-flex;
+  align-items: center;
 }
 
 .quick-fill button:hover {
@@ -163,7 +166,12 @@
   font-weight: 700;
   padding: 0.48rem 0.72rem;
   cursor: pointer;
-  line-height: 1;
+  line-height: normal;
+  min-height: 2.15rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
 }
 
 .provider-dropdown summary:hover {

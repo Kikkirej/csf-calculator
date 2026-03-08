@@ -12,6 +12,7 @@ import {
   createShareQuestionParams,
   parseSharePrefilledAnswers,
 } from './domain/share'
+import { buildPdfOverviewDocument } from './domain/pdfExport'
 import type { CalculatorFormValues, ObjectiveId } from './domain/types'
 import {
   Questionnaire,
@@ -314,7 +315,31 @@ function App() {
   }
 
   const handleExportPdf = () => {
-    window.print()
+    const exportWindow = window.open('', '_blank', 'noopener,noreferrer,width=1024,height=1280')
+
+    if (!exportWindow) {
+      window.print()
+      return
+    }
+
+    exportWindow.onafterprint = () => {
+      exportWindow.close()
+    }
+
+    exportWindow.document.open()
+    exportWindow.document.write(
+      buildPdfOverviewDocument({
+        framework: csfFramework,
+        result,
+        generatedAt: new Date(),
+      }),
+    )
+    exportWindow.document.close()
+
+    exportWindow.onload = () => {
+      exportWindow.focus()
+      exportWindow.print()
+    }
   }
 
   return (
