@@ -81,6 +81,7 @@
   border: 1px solid #d9e2ec;
   border-radius: 16px;
   padding: 1rem;
+  min-width: 0;
   box-shadow: 0 8px 24px rgba(30, 56, 84, 0.09);
 }
 
@@ -228,6 +229,7 @@
   top: calc(100% + 0.35rem);
   right: 0;
   min-width: 240px;
+  max-width: min(320px, calc(100vw - 2.5rem));
   padding: 0.45rem;
   border: 1px solid #b8ccdf;
   border-radius: 10px;
@@ -259,6 +261,7 @@
   border-radius: 14px;
   background: #ffffff;
   padding: 0.85rem;
+  min-width: 0;
   margin-bottom: 0.8rem;
 }
 
@@ -270,9 +273,14 @@
   margin-bottom: 0.8rem;
 }
 
+.objective-header > div {
+  min-width: 0;
+}
+
 .objective-header h3 {
   margin: 0;
   font-size: 1rem;
+  overflow-wrap: anywhere;
 }
 
 .objective-header p {
@@ -352,6 +360,7 @@
   border: 1px solid #dbe6f0;
   border-radius: 12px;
   padding: 0.75rem;
+  min-width: 0;
 }
 
 .result-row header {
@@ -360,9 +369,14 @@
   gap: 0.5rem;
 }
 
+.result-row header > * {
+  min-width: 0;
+}
+
 .result-row h3 {
   margin: 0;
   font-size: 0.95rem;
+  overflow-wrap: anywhere;
 }
 
 .result-row header p {
@@ -389,6 +403,7 @@
   margin: 0.44rem 0 0;
   color: #43617c;
   font-size: 0.86rem;
+  overflow-wrap: anywhere;
 }
 
 .status-pass,
@@ -420,12 +435,19 @@
   border: 1px solid #d9e3ee;
   border-radius: 10px;
   padding: 0.56rem 0.65rem;
+  min-width: 0;
   background: #fff;
 }
 
 .trace-list span {
   font-size: 0.84rem;
   color: #4a6782;
+  overflow-wrap: anywhere;
+}
+
+.traceability-panel code {
+  overflow-wrap: anywhere;
+  word-break: break-word;
 }
 
 .share-actions {
@@ -515,12 +537,58 @@
 }
 
 @media (max-width: 680px) {
+  .app-shell {
+    padding: 1rem 0.72rem 2.2rem;
+  }
+
+  .panel {
+    padding: 0.85rem;
+  }
+
   .hero {
     padding: 1.2rem;
   }
 
+  .quick-fill button,
+  .provider-dropdown {
+    flex: 1 1 10rem;
+    min-width: 0;
+  }
+
+  .provider-dropdown summary {
+    width: 100%;
+  }
+
+  .provider-dropdown-menu {
+    left: 0;
+    right: auto;
+    min-width: 0;
+    width: min(100%, 20rem);
+    max-width: calc(100vw - 2.4rem);
+  }
+
+  .seal-bulk-row select,
+  .seal-bulk-row button {
+    flex: 1 1 100%;
+    min-width: 0;
+  }
+
   .objective-header {
     flex-direction: column;
+  }
+
+  .seal-select {
+    width: 100%;
+    min-width: 0;
+  }
+
+  .result-row header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .result-row header p {
+    margin-top: 0.15rem;
   }
 
   .headline-value {
