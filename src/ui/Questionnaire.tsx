@@ -1,3 +1,4 @@
+import { useState } from 'react'
 import type { UseFormRegister } from 'react-hook-form'
 
 import type { CalculatorFormValues, CsfFramework } from '../domain/types'
@@ -38,6 +39,7 @@ interface QuestionnaireProps {
   primaryProviderExamples: ProviderExampleOption[]
   additionalProviderExamples: ProviderExampleOption[]
   onApplyProviderExample: (providerId: ProviderExampleId) => void
+  onSetAllRequiredSeals: (sealLevel: number) => void
 }
 
 export function Questionnaire({
@@ -46,7 +48,10 @@ export function Questionnaire({
   primaryProviderExamples,
   additionalProviderExamples,
   onApplyProviderExample,
+  onSetAllRequiredSeals,
 }: QuestionnaireProps) {
+  const [bulkSealLevel, setBulkSealLevel] = useState(2)
+
   return (
     <section className="panel questionnaire-panel">
       <div className="panel-header">
@@ -69,6 +74,29 @@ export function Questionnaire({
             </li>
           ))}
         </ul>
+
+        <div className="seal-bulk-controls">
+          <label htmlFor="bulk-required-seal">Set all required SEAL values</label>
+          <div className="seal-bulk-row">
+            <select
+              id="bulk-required-seal"
+              value={bulkSealLevel}
+              onChange={(event) => {
+                const nextLevel = Number.parseInt(event.target.value, 10)
+                setBulkSealLevel(Number.isNaN(nextLevel) ? 0 : nextLevel)
+              }}
+            >
+              {sealOptions.map((level) => (
+                <option key={`bulk-seal-${level}`} value={level}>
+                  SEAL-{level}
+                </option>
+              ))}
+            </select>
+            <button type="button" onClick={() => onSetAllRequiredSeals(bulkSealLevel)}>
+              Set All Seals
+            </button>
+          </div>
+        </div>
       </details>
 
       <div className="quick-fill" role="group" aria-label="Provider example scenarios">

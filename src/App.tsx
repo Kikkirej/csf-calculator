@@ -10,7 +10,9 @@ import {
 import {
   buildShareLink,
   createShareQuestionParams,
+  createShareRequiredSealParams,
   parseSharePrefilledAnswers,
+  parseSharePrefilledRequiredSeals,
 } from './domain/share'
 import { buildPdfOverviewDocument } from './domain/pdfExport'
 import type { CalculatorFormValues, ObjectiveId } from './domain/types'
@@ -25,6 +27,7 @@ import { TraceabilityPanel } from './ui/TraceabilityPanel'
 import './App.css'
 
 const shareQuestionParams = createShareQuestionParams(csfFramework)
+const shareRequiredSealParams = createShareRequiredSealParams(csfFramework)
 
 const buildInitialFormValues = (): CalculatorFormValues => {
   const defaultAnswers = buildDefaultAnswers(csfFramework)
@@ -41,8 +44,13 @@ const buildInitialFormValues = (): CalculatorFormValues => {
     shareQuestionParams,
     window.location.search,
   )
+  const prefilledRequiredSeals = parseSharePrefilledRequiredSeals(
+    shareRequiredSealParams,
+    window.location.search,
+  )
 
   const mergedAnswers = { ...defaultAnswers }
+  const mergedRequiredSeals = { ...defaultRequiredSeals }
 
   Object.entries(prefilledAnswers).forEach(([questionId, score]) => {
     if (typeof score === 'number') {
@@ -50,9 +58,15 @@ const buildInitialFormValues = (): CalculatorFormValues => {
     }
   })
 
+  Object.entries(prefilledRequiredSeals).forEach(([objectiveId, seal]) => {
+    if (typeof seal === 'number') {
+      mergedRequiredSeals[objectiveId] = seal
+    }
+  })
+
   return {
     answers: mergedAnswers,
-    requiredSeals: defaultRequiredSeals,
+    requiredSeals: mergedRequiredSeals,
   }
 }
 
@@ -266,8 +280,14 @@ function App() {
     }
 
     const baseUrl = `${window.location.origin}${window.location.pathname}`
-    return buildShareLink(shareQuestionParams, answers ?? {}, baseUrl)
-  }, [answers])
+    return buildShareLink(
+      shareQuestionParams,
+      shareRequiredSealParams,
+      answers ?? {},
+      requiredSeals ?? {},
+      baseUrl,
+    )
+  }, [answers, requiredSeals])
 
   useEffect(() => {
     if (linkCopyStatus === 'idle') {
@@ -296,6 +316,18 @@ function App() {
           shouldTouch: true,
           shouldValidate: true,
         })
+      })
+    })
+  }
+
+  const handleSetAllRequiredSeals = (sealLevel: number) => {
+    csfFramework.objectives.forEach((objective) => {
+      const fieldName = `requiredSeals.${objective.id}` as `requiredSeals.${string}`
+
+      setValue(fieldName, sealLevel, {
+        shouldDirty: true,
+        shouldTouch: true,
+        shouldValidate: true,
       })
     })
   }
@@ -370,6 +402,7 @@ function App() {
           primaryProviderExamples={primaryProviderExampleOptions}
           additionalProviderExamples={additionalProviderExampleOptions}
           onApplyProviderExample={handleApplyProviderExample}
+          onSetAllRequiredSeals={handleSetAllRequiredSeals}
         />
 
         <div className="sidebar-stack">

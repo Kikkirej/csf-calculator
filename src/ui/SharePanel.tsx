@@ -16,9 +16,7 @@ export function SharePanel({
       <div className="panel-header">
         <h2>Share Options</h2>
         <p>
-          Generate a link that restores all scores with parameters like{' '}
-          <code>Sov1.1=&lt;value&gt;</code>, or export a short overview optimized
-          for PDF.
+          Generate a share link or export a short overview optimized for PDF.
         </p>
       </div>
 

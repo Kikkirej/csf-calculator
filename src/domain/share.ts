@@ -1,7 +1,12 @@
-import type { AnswerMap, CsfFramework } from './types'
+import type { AnswerMap, CsfFramework, RequiredSealMap } from './types'
 
 export interface ShareQuestionParam {
   questionId: string
+  paramKey: string
+}
+
+export interface ShareRequiredSealParam {
+  objectiveId: string
   paramKey: string
 }
 
@@ -45,6 +50,14 @@ export const createShareQuestionParams = (framework: CsfFramework): ShareQuestio
     })),
   )
 
+export const createShareRequiredSealParams = (
+  framework: CsfFramework,
+): ShareRequiredSealParam[] =>
+  framework.objectives.map((objective, objectiveIndex) => ({
+    objectiveId: objective.id,
+    paramKey: `Sov${objectiveIndex + 1}.seal`,
+  }))
+
 export const parseSharePrefilledAnswers = (
   questionParams: ShareQuestionParam[],
   search: string,
@@ -63,9 +76,29 @@ export const parseSharePrefilledAnswers = (
   return answersFromQuery
 }
 
+export const parseSharePrefilledRequiredSeals = (
+  requiredSealParams: ShareRequiredSealParam[],
+  search: string,
+): Partial<RequiredSealMap> => {
+  const queryParams = new URLSearchParams(search)
+  const sealsFromQuery: Partial<RequiredSealMap> = {}
+
+  requiredSealParams.forEach((requiredSealParam) => {
+    const parsedScore = parseShareScore(queryParams.get(requiredSealParam.paramKey))
+
+    if (parsedScore !== null) {
+      sealsFromQuery[requiredSealParam.objectiveId] = parsedScore
+    }
+  })
+
+  return sealsFromQuery
+}
+
 export const buildShareLink = (
   questionParams: ShareQuestionParam[],
+  requiredSealParams: ShareRequiredSealParam[],
   answers: Partial<AnswerMap>,
+  requiredSeals: Partial<RequiredSealMap>,
   baseUrl: string,
 ): string => {
   const queryParams = new URLSearchParams()
@@ -74,6 +107,13 @@ export const buildShareLink = (
     queryParams.set(
       questionParam.paramKey,
       String(normalizeShareScore(answers[questionParam.questionId])),
+    )
+  })
+
+  requiredSealParams.forEach((requiredSealParam) => {
+    queryParams.set(
+      requiredSealParam.paramKey,
+      String(normalizeShareScore(requiredSeals[requiredSealParam.objectiveId])),
     )
   })
 

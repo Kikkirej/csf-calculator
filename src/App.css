@@ -130,6 +130,47 @@
   font-size: 0.86rem;
 }
 
+.seal-bulk-controls {
+  margin-top: 0.75rem;
+  padding-top: 0.7rem;
+  border-top: 1px solid #d9e6f2;
+  display: grid;
+  gap: 0.45rem;
+}
+
+.seal-bulk-controls label {
+  font-size: 0.83rem;
+  color: #365168;
+  font-weight: 600;
+}
+
+.seal-bulk-row {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.seal-bulk-row select {
+  border: 1px solid #b9cbde;
+  border-radius: 9px;
+  background: #fff;
+  padding: 0.45rem 0.52rem;
+  min-width: 128px;
+}
+
+.seal-bulk-row button {
+  border: 1px solid #9cbad6;
+  background: #f4f9ff;
+  color: #0f4d6f;
+  border-radius: 10px;
+  font-weight: 600;
+  padding: 0.48rem 0.72rem;
+}
+
+.seal-bulk-row button:hover {
+  border-color: #0f4d6f;
+}
+
 .quick-fill {
   display: flex;
   gap: 0.55rem;
