@@ -1,3 +1,5 @@
+/* SPDX-License-Identifier: GPL-3.0-or-later */
+
 export type ObjectiveId =
   | 'SOV-1'
   | 'SOV-2'

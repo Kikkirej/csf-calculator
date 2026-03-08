@@ -1,3 +1,5 @@
+/* SPDX-License-Identifier: GPL-3.0-or-later */
+
 import { useEffect, useMemo, useState } from 'react'
 import { useForm, useWatch } from 'react-hook-form'
 
@@ -92,6 +94,7 @@ const additionalProviderExampleOptions: ProviderExampleOption[] = [
   { id: 'stackit', label: 'STACKIT' },
   { id: 'aruba-cloud', label: 'Aruba Cloud' },
   { id: 'exoscale', label: 'Exoscale' },
+  { id: 'alibaba-cloud', label: 'Alibaba Cloud' },
   { id: 'oracle-cloud-infrastructure', label: 'Oracle Cloud Infrastructure (OCI)' },
   { id: 'ibm-cloud', label: 'IBM Cloud' },
 ]
@@ -226,6 +229,18 @@ const providerExampleProfiles: Record<ProviderExampleId, ProviderExampleProfile>
       'SOV-5': [2, 2, 2],
       'SOV-6': [3, 3, 3],
       'SOV-7': [3, 3, 3],
+      'SOV-8': [3, 3, 3],
+    },
+  },
+  'alibaba-cloud': {
+    objectiveScores: {
+      'SOV-1': [1, 1, 2],
+      'SOV-2': [1, 1, 1],
+      'SOV-3': [2, 2, 2],
+      'SOV-4': [2, 1, 2],
+      'SOV-5': [1, 1, 2],
+      'SOV-6': [2, 1, 1],
+      'SOV-7': [4, 3, 2],
       'SOV-8': [3, 3, 3],
     },
   },

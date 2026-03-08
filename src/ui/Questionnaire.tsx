@@ -1,3 +1,5 @@
+/* SPDX-License-Identifier: GPL-3.0-or-later */
+
 import { useState } from 'react'
 import type { UseFormRegister } from 'react-hook-form'
 
@@ -15,6 +17,7 @@ export type ProviderExampleId =
   | 'stackit'
   | 'aruba-cloud'
   | 'exoscale'
+  | 'alibaba-cloud'
   | 'oracle-cloud-infrastructure'
   | 'ibm-cloud'
 

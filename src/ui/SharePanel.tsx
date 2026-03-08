@@ -1,3 +1,5 @@
+/* SPDX-License-Identifier: GPL-3.0-or-later */
+
 interface SharePanelProps {
   shareLink: string
   copyStatus: 'idle' | 'copied' | 'failed'

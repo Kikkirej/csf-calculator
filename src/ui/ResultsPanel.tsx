@@ -1,3 +1,5 @@
+/* SPDX-License-Identifier: GPL-3.0-or-later */
+
 import type { CsfFramework, SovereigntyScoreResult } from '../domain/types'
 
 interface ResultsPanelProps {
