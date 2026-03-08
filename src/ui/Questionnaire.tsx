@@ -2,6 +2,18 @@ import type { UseFormRegister } from 'react-hook-form'
 
 import type { CalculatorFormValues, CsfFramework } from '../domain/types'
 
+export type ProviderExampleId =
+  | 'azure'
+  | 'open-telekom-cloud'
+  | 'aws'
+  | 'hetzner'
+  | 'google-cloud'
+
+export interface ProviderExampleOption {
+  id: ProviderExampleId
+  label: string
+}
+
 const scoreOptions = [
   { value: 0, label: '0 - None' },
   { value: 1, label: '1 - Limited' },
@@ -15,10 +27,16 @@ const sealOptions = [0, 1, 2, 3, 4]
 interface QuestionnaireProps {
   framework: CsfFramework
   register: UseFormRegister<CalculatorFormValues>
-  onFillAll: (score: number) => void
+  providerExamples: ProviderExampleOption[]
+  onApplyProviderExample: (providerId: ProviderExampleId) => void
 }
 
-export function Questionnaire({ framework, register, onFillAll }: QuestionnaireProps) {
+export function Questionnaire({
+  framework,
+  register,
+  providerExamples,
+  onApplyProviderExample,
+}: QuestionnaireProps) {
   return (
     <section className="panel questionnaire-panel">
       <div className="panel-header">
@@ -43,16 +61,16 @@ export function Questionnaire({ framework, register, onFillAll }: QuestionnaireP
         </ul>
       </details>
 
-      <div className="quick-fill" role="group" aria-label="Quick fill scenarios">
-        <button type="button" onClick={() => onFillAll(1)}>
-          Fill Low Baseline
-        </button>
-        <button type="button" onClick={() => onFillAll(2)}>
-          Fill Balanced Baseline
-        </button>
-        <button type="button" onClick={() => onFillAll(4)}>
-          Fill Optimistic Baseline
-        </button>
+      <div className="quick-fill" role="group" aria-label="Provider example scenarios">
+        {providerExamples.map((providerExample) => (
+          <button
+            key={providerExample.id}
+            type="button"
+            onClick={() => onApplyProviderExample(providerExample.id)}
+          >
+            {providerExample.label}
+          </button>
+        ))}
       </div>
 
       {framework.objectives.map((objective) => (

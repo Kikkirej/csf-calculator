@@ -7,8 +7,12 @@ import {
   buildDefaultRequiredSeals,
   computeSovereigntyScore,
 } from './domain/scoring'
-import type { CalculatorFormValues } from './domain/types'
-import { Questionnaire } from './ui/Questionnaire'
+import type { CalculatorFormValues, ObjectiveId } from './domain/types'
+import {
+  Questionnaire,
+  type ProviderExampleId,
+  type ProviderExampleOption,
+} from './ui/Questionnaire'
 import { ResultsPanel } from './ui/ResultsPanel'
 import { TraceabilityPanel } from './ui/TraceabilityPanel'
 import './App.css'
@@ -18,9 +22,82 @@ const defaultValues: CalculatorFormValues = {
   requiredSeals: buildDefaultRequiredSeals(csfFramework),
 }
 
-const allQuestionIds = csfFramework.objectives.flatMap((objective) =>
-  objective.questions.map((question) => question.id),
-)
+type ObjectiveExampleScores = Record<ObjectiveId, [number, number, number]>
+
+interface ProviderExampleProfile {
+  objectiveScores: ObjectiveExampleScores
+}
+
+const providerExampleOptions: ProviderExampleOption[] = [
+  { id: 'azure', label: 'Azure' },
+  { id: 'open-telekom-cloud', label: 'Open Telekom Cloud' },
+  { id: 'aws', label: 'AWS' },
+  { id: 'hetzner', label: 'Hetzner' },
+  { id: 'google-cloud', label: 'Google Cloud' },
+]
+
+const providerExampleProfiles: Record<ProviderExampleId, ProviderExampleProfile> = {
+  azure: {
+    objectiveScores: {
+      'SOV-1': [2, 1, 2],
+      'SOV-2': [1, 1, 1],
+      'SOV-3': [2, 2, 2],
+      'SOV-4': [2, 2, 2],
+      'SOV-5': [1, 1, 2],
+      'SOV-6': [2, 1, 1],
+      'SOV-7': [4, 3, 2],
+      'SOV-8': [3, 3, 4],
+    },
+  },
+  'open-telekom-cloud': {
+    objectiveScores: {
+      'SOV-1': [4, 4, 4],
+      'SOV-2': [4, 4, 4],
+      'SOV-3': [4, 4, 3],
+      'SOV-4': [3, 4, 3],
+      'SOV-5': [3, 3, 3],
+      'SOV-6': [3, 3, 3],
+      'SOV-7': [4, 4, 4],
+      'SOV-8': [3, 3, 3],
+    },
+  },
+  aws: {
+    objectiveScores: {
+      'SOV-1': [1, 1, 2],
+      'SOV-2': [1, 1, 1],
+      'SOV-3': [2, 2, 2],
+      'SOV-4': [2, 1, 2],
+      'SOV-5': [1, 1, 2],
+      'SOV-6': [2, 1, 1],
+      'SOV-7': [4, 3, 2],
+      'SOV-8': [3, 3, 3],
+    },
+  },
+  hetzner: {
+    objectiveScores: {
+      'SOV-1': [4, 4, 3],
+      'SOV-2': [4, 4, 4],
+      'SOV-3': [3, 4, 3],
+      'SOV-4': [4, 4, 3],
+      'SOV-5': [3, 3, 3],
+      'SOV-6': [4, 3, 3],
+      'SOV-7': [3, 3, 3],
+      'SOV-8': [3, 3, 3],
+    },
+  },
+  'google-cloud': {
+    objectiveScores: {
+      'SOV-1': [1, 1, 2],
+      'SOV-2': [1, 1, 1],
+      'SOV-3': [2, 2, 2],
+      'SOV-4': [2, 2, 2],
+      'SOV-5': [1, 1, 2],
+      'SOV-6': [3, 2, 2],
+      'SOV-7': [3, 3, 2],
+      'SOV-8': [4, 4, 4],
+    },
+  },
+}
 
 function App() {
   const { register, setValue, control } = useForm<CalculatorFormValues>({
@@ -36,14 +113,21 @@ function App() {
     [answers, requiredSeals],
   )
 
-  const handleFillAll = (score: number) => {
-    allQuestionIds.forEach((questionId) => {
-      const fieldName = `answers.${questionId}` as `answers.${string}`
+  const handleApplyProviderExample = (providerId: ProviderExampleId) => {
+    const profile = providerExampleProfiles[providerId]
 
-      setValue(fieldName, score, {
-        shouldDirty: true,
-        shouldTouch: true,
-        shouldValidate: true,
+    csfFramework.objectives.forEach((objective) => {
+      const objectiveScores = profile.objectiveScores[objective.id]
+
+      objective.questions.forEach((question, index) => {
+        const fieldName = `answers.${question.id}` as `answers.${string}`
+        const score = objectiveScores[index] ?? 0
+
+        setValue(fieldName, score, {
+          shouldDirty: true,
+          shouldTouch: true,
+          shouldValidate: true,
+        })
       })
     })
   }
@@ -73,7 +157,8 @@ function App() {
         <Questionnaire
           framework={csfFramework}
           register={register}
-          onFillAll={handleFillAll}
+          providerExamples={providerExampleOptions}
+          onApplyProviderExample={handleApplyProviderExample}
         />
 
         <div className="sidebar-stack">
