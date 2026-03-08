@@ -379,6 +379,57 @@
   color: #4a6782;
 }
 
+.share-actions {
+  display: flex;
+  gap: 0.55rem;
+  flex-wrap: wrap;
+  margin-bottom: 0.85rem;
+}
+
+.share-actions button {
+  border: 1px solid #9cbad6;
+  background: #f4f9ff;
+  color: #0f4d6f;
+  border-radius: 10px;
+  font-weight: 600;
+  padding: 0.48rem 0.72rem;
+}
+
+.share-actions button:hover {
+  border-color: #0f4d6f;
+}
+
+.share-link-label {
+  display: block;
+  margin-bottom: 0.35rem;
+  color: #38546f;
+  font-size: 0.83rem;
+}
+
+.share-link-input {
+  width: 100%;
+  border: 1px solid #b9cbde;
+  border-radius: 9px;
+  background: #fff;
+  padding: 0.46rem 0.52rem;
+  font-size: 0.78rem;
+  color: #254159;
+}
+
+.share-status {
+  margin: 0.45rem 0 0;
+  font-size: 0.84rem;
+  font-weight: 700;
+}
+
+.share-status-pass {
+  color: #14724f;
+}
+
+.share-status-fail {
+  color: #8b2f2f;
+}
+
 .app-footer {
   margin-top: 1rem;
   display: flex;
@@ -425,5 +476,20 @@
 
   .headline-value {
     font-size: 1.45rem;
+  }
+}
+
+@media print {
+  .quick-fill,
+  .provider-dropdown,
+  .share-actions,
+  .share-status {
+    display: none !important;
+  }
+
+  .share-link-input {
+    border: none;
+    padding: 0;
+    background: transparent;
   }
 }

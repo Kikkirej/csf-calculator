@@ -1,4 +1,4 @@
-import { useMemo } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import { useForm, useWatch } from 'react-hook-form'
 
 import { csfFramework } from './data/sources'
@@ -7,6 +7,11 @@ import {
   buildDefaultRequiredSeals,
   computeSovereigntyScore,
 } from './domain/scoring'
+import {
+  buildShareLink,
+  createShareQuestionParams,
+  parseSharePrefilledAnswers,
+} from './domain/share'
 import type { CalculatorFormValues, ObjectiveId } from './domain/types'
 import {
   Questionnaire,
@@ -14,12 +19,40 @@ import {
   type ProviderExampleOption,
 } from './ui/Questionnaire'
 import { ResultsPanel } from './ui/ResultsPanel'
+import { SharePanel } from './ui/SharePanel'
 import { TraceabilityPanel } from './ui/TraceabilityPanel'
 import './App.css'
 
-const defaultValues: CalculatorFormValues = {
-  answers: buildDefaultAnswers(csfFramework),
-  requiredSeals: buildDefaultRequiredSeals(csfFramework),
+const shareQuestionParams = createShareQuestionParams(csfFramework)
+
+const buildInitialFormValues = (): CalculatorFormValues => {
+  const defaultAnswers = buildDefaultAnswers(csfFramework)
+  const defaultRequiredSeals = buildDefaultRequiredSeals(csfFramework)
+
+  if (typeof window === 'undefined') {
+    return {
+      answers: defaultAnswers,
+      requiredSeals: defaultRequiredSeals,
+    }
+  }
+
+  const prefilledAnswers = parseSharePrefilledAnswers(
+    shareQuestionParams,
+    window.location.search,
+  )
+
+  const mergedAnswers = { ...defaultAnswers }
+
+  Object.entries(prefilledAnswers).forEach(([questionId, score]) => {
+    if (typeof score === 'number') {
+      mergedAnswers[questionId] = score
+    }
+  })
+
+  return {
+    answers: mergedAnswers,
+    requiredSeals: defaultRequiredSeals,
+  }
 }
 
 type ObjectiveExampleScores = Record<ObjectiveId, [number, number, number]>
@@ -27,6 +60,8 @@ type ObjectiveExampleScores = Record<ObjectiveId, [number, number, number]>
 interface ProviderExampleProfile {
   objectiveScores: ObjectiveExampleScores
 }
+
+type LinkCopyStatus = 'idle' | 'copied' | 'failed'
 
 const primaryProviderExampleOptions: ProviderExampleOption[] = [
   { id: 'azure', label: 'Azure' },
@@ -207,9 +242,13 @@ const providerExampleProfiles: Record<ProviderExampleId, ProviderExampleProfile>
 }
 
 function App() {
+  const [linkCopyStatus, setLinkCopyStatus] = useState<LinkCopyStatus>('idle')
+
+  const initialValues = useMemo(() => buildInitialFormValues(), [])
+
   const { register, setValue, control } = useForm<CalculatorFormValues>({
     mode: 'onChange',
-    defaultValues,
+    defaultValues: initialValues,
   })
 
   const answers = useWatch({ control, name: 'answers' })
@@ -219,6 +258,27 @@ function App() {
     () => computeSovereigntyScore(csfFramework, answers ?? {}, requiredSeals ?? {}),
     [answers, requiredSeals],
   )
+
+  const shareLink = useMemo(() => {
+    if (typeof window === 'undefined') {
+      return ''
+    }
+
+    const baseUrl = `${window.location.origin}${window.location.pathname}`
+    return buildShareLink(shareQuestionParams, answers ?? {}, baseUrl)
+  }, [answers])
+
+  useEffect(() => {
+    if (linkCopyStatus === 'idle') {
+      return
+    }
+
+    const timeoutId = window.setTimeout(() => {
+      setLinkCopyStatus('idle')
+    }, 2000)
+
+    return () => window.clearTimeout(timeoutId)
+  }, [linkCopyStatus])
 
   const handleApplyProviderExample = (providerId: ProviderExampleId) => {
     const profile = providerExampleProfiles[providerId]
@@ -237,6 +297,24 @@ function App() {
         })
       })
     })
+  }
+
+  const handleCopyShareLink = async () => {
+    if (!shareLink || !navigator.clipboard) {
+      setLinkCopyStatus('failed')
+      return
+    }
+
+    try {
+      await navigator.clipboard.writeText(shareLink)
+      setLinkCopyStatus('copied')
+    } catch {
+      setLinkCopyStatus('failed')
+    }
+  }
+
+  const handleExportPdf = () => {
+    window.print()
   }
 
   return (
@@ -272,6 +350,12 @@ function App() {
         <div className="sidebar-stack">
           <ResultsPanel framework={csfFramework} result={result} />
           <TraceabilityPanel framework={csfFramework} />
+          <SharePanel
+            shareLink={shareLink}
+            copyStatus={linkCopyStatus}
+            onCopyShareLink={handleCopyShareLink}
+            onExportPdf={handleExportPdf}
+          />
         </div>
       </main>
 
