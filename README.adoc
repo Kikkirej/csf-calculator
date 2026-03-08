@@ -126,3 +126,10 @@ src/
     ResultsPanel.tsx
     TraceabilityPanel.tsx
 ----
+
+== License
+
+This project is licensed under the GNU General Public License, version 3 or later (`GPL-3.0-or-later`).
+
+- Full license text: `LICENSE`
+- Source files include the SPDX identifier: `SPDX-License-Identifier: GPL-3.0-or-later`
