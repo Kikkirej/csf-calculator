@@ -1,0 +1,340 @@
+{
+  "version": "1.2.1",
+  "title": "Cloud Sovereignty Framework",
+  "publicationDate": "2025-10",
+  "sourceUrl": "https://commission.europa.eu/document/download/09579818-64a6-4dd5-9577-446ab6219113_en?filename=Cloud-Sovereignty-Framework.pdf",
+  "scoring": {
+    "sourceSection": "Section 5",
+    "formula": "sum((score(SOVn)/max_score(SOVn))*weight(SOVn)), n=1..8",
+    "weightsMustSumTo": 100
+  },
+  "sealLevels": [
+    {
+      "level": 0,
+      "label": "No Sovereignty",
+      "description": "Service, technology, or operations under exclusive non-EU control and non-EU jurisdiction.",
+      "sourceSection": "Section 3"
+    },
+    {
+      "level": 1,
+      "label": "Jurisdictional Sovereignty",
+      "description": "EU law formally applies with limited enforceability and significant non-EU control.",
+      "sourceSection": "Section 3"
+    },
+    {
+      "level": 2,
+      "label": "Data Sovereignty",
+      "description": "EU law is enforceable with material non-EU dependencies remaining.",
+      "sourceSection": "Section 3"
+    },
+    {
+      "level": 3,
+      "label": "Digital Resilience",
+      "description": "EU law is enforceable and EU actors exercise meaningful influence with only marginal non-EU control.",
+      "sourceSection": "Section 3"
+    },
+    {
+      "level": 4,
+      "label": "Full Digital Sovereignty",
+      "description": "Technology and operations are under complete EU control with no critical non-EU dependencies.",
+      "sourceSection": "Section 3"
+    }
+  ],
+  "objectives": [
+    {
+      "id": "SOV-1",
+      "name": "Strategic Sovereignty",
+      "weight": 15,
+      "description": "Anchoring of services within EU legal, financial, and industrial ecosystems.",
+      "sourceSection": "Section 2 and Section 4",
+      "contributingFactors": [
+        "Location of decisive authority within EU jurisdiction",
+        "Assurances against change of control",
+        "EU financing, investment, jobs, and value creation",
+        "Alignment with EU strategic initiatives",
+        "Operational continuity during support disruption"
+      ],
+      "questions": [
+        {
+          "id": "SOV1-Q1",
+          "prompt": "How strongly are decisive governance and control bodies located under EU jurisdiction?",
+          "factor": "EU location of decisive authority",
+          "sourceSection": "Section 4, SOV-1",
+          "maxPoints": 4
+        },
+        {
+          "id": "SOV1-Q2",
+          "prompt": "How robust are legal and organizational safeguards against non-EU change of control?",
+          "factor": "Assurances against change of control",
+          "sourceSection": "Section 4, SOV-1",
+          "maxPoints": 4
+        },
+        {
+          "id": "SOV1-Q3",
+          "prompt": "How strong is sustained EU industrial participation (investment, jobs, initiatives)?",
+          "factor": "EU industrial and strategic alignment",
+          "sourceSection": "Section 4, SOV-1",
+          "maxPoints": 4
+        }
+      ]
+    },
+    {
+      "id": "SOV-2",
+      "name": "Legal and Jurisdictional Sovereignty",
+      "weight": 10,
+      "description": "Extent to which service governance is anchored in EU jurisdiction and shielded from external legal claims.",
+      "sourceSection": "Section 2 and Section 4",
+      "contributingFactors": [
+        "National legal system governing contracts and operations",
+        "Exposure to non-EU extraterritorial laws",
+        "Channels through which non-EU authorities can compel access",
+        "Applicability of international transfer restrictions",
+        "Jurisdiction and location of IP development"
+      ],
+      "questions": [
+        {
+          "id": "SOV2-Q1",
+          "prompt": "To what extent are contracts and operations governed exclusively by EU law?",
+          "factor": "Governing legal system",
+          "sourceSection": "Section 4, SOV-2",
+          "maxPoints": 4
+        },
+        {
+          "id": "SOV2-Q2",
+          "prompt": "How limited is exposure to non-EU laws with cross-border reach?",
+          "factor": "Exposure to non-EU law",
+          "sourceSection": "Section 4, SOV-2",
+          "maxPoints": 4
+        },
+        {
+          "id": "SOV2-Q3",
+          "prompt": "How effectively are legal, contractual, and technical access channels from non-EU authorities prevented?",
+          "factor": "Compelled access channels",
+          "sourceSection": "Section 4, SOV-2",
+          "maxPoints": 4
+        }
+      ]
+    },
+    {
+      "id": "SOV-3",
+      "name": "Data and AI Sovereignty",
+      "weight": 10,
+      "description": "Control and protection of data and AI processing under EU governance.",
+      "sourceSection": "Section 2 and Section 4",
+      "contributingFactors": [
+        "Customer control over cryptographic access",
+        "Auditability of access and AI usage",
+        "Irreversible deletion with evidence",
+        "EU-only storage and processing confinement",
+        "EU control of model and data pipeline lifecycle"
+      ],
+      "questions": [
+        {
+          "id": "SOV3-Q1",
+          "prompt": "How strong is customer-exclusive control over cryptographic keys and access rights?",
+          "factor": "Cryptographic control",
+          "sourceSection": "Section 4, SOV-3",
+          "maxPoints": 4
+        },
+        {
+          "id": "SOV3-Q2",
+          "prompt": "How complete is EU confinement for data storage, processing, and AI model operation?",
+          "factor": "EU processing confinement",
+          "sourceSection": "Section 4, SOV-3",
+          "maxPoints": 4
+        },
+        {
+          "id": "SOV3-Q3",
+          "prompt": "How auditable are access events, AI model usage, and verified data deletion outcomes?",
+          "factor": "Auditability and deletion guarantees",
+          "sourceSection": "Section 4, SOV-3",
+          "maxPoints": 4
+        }
+      ]
+    },
+    {
+      "id": "SOV-4",
+      "name": "Operational Sovereignty",
+      "weight": 15,
+      "description": "Ability of EU actors to operate and evolve technology without foreign dependence.",
+      "sourceSection": "Section 2 and Section 4",
+      "contributingFactors": [
+        "Ease of migration and avoidance of lock-in",
+        "EU operator capability without non-EU support",
+        "Availability of EU talent pool",
+        "EU-jurisdiction operational support",
+        "Availability of full documentation and know-how"
+      ],
+      "questions": [
+        {
+          "id": "SOV4-Q1",
+          "prompt": "How practical is workload migration or integration with alternative EU-controlled solutions?",
+          "factor": "Migration and lock-in control",
+          "sourceSection": "Section 4, SOV-4",
+          "maxPoints": 4
+        },
+        {
+          "id": "SOV4-Q2",
+          "prompt": "How independently can EU teams operate, maintain, and support the service?",
+          "factor": "EU operational autonomy",
+          "sourceSection": "Section 4, SOV-4",
+          "maxPoints": 4
+        },
+        {
+          "id": "SOV4-Q3",
+          "prompt": "How complete is access to technical documentation, source materials, and operational know-how?",
+          "factor": "Long-term operational continuity",
+          "sourceSection": "Section 4, SOV-4",
+          "maxPoints": 4
+        }
+      ]
+    },
+    {
+      "id": "SOV-5",
+      "name": "Supply Chain Sovereignty",
+      "weight": 20,
+      "description": "Geographic origin, transparency, and resilience of critical technology supply components.",
+      "sourceSection": "Section 2 and Section 4",
+      "contributingFactors": [
+        "Geographic source of hardware and manufacturing",
+        "Jurisdiction and provenance of firmware and embedded code",
+        "Origin and jurisdiction of software development and distribution",
+        "Dependence on non-EU vendors and facilities",
+        "Visibility into suppliers and sub-suppliers"
+      ],
+      "questions": [
+        {
+          "id": "SOV5-Q1",
+          "prompt": "How strong is EU provenance and legal control across critical hardware and firmware components?",
+          "factor": "Hardware and embedded code provenance",
+          "sourceSection": "Section 4, SOV-5",
+          "maxPoints": 4
+        },
+        {
+          "id": "SOV5-Q2",
+          "prompt": "How strongly is software architecture, packaging, distribution, and updates governed from the EU?",
+          "factor": "Software origin and jurisdiction",
+          "sourceSection": "Section 4, SOV-5",
+          "maxPoints": 4
+        },
+        {
+          "id": "SOV5-Q3",
+          "prompt": "How transparent and auditable is the full supplier and sub-supplier chain?",
+          "factor": "Supply chain visibility and audit rights",
+          "sourceSection": "Section 4, SOV-5",
+          "maxPoints": 4
+        }
+      ]
+    },
+    {
+      "id": "SOV-6",
+      "name": "Technology Sovereignty",
+      "weight": 15,
+      "description": "Openness, interoperability, auditability, and independence in core technology stacks.",
+      "sourceSection": "Section 2 and Section 4",
+      "contributingFactors": [
+        "Use of open and documented standards",
+        "Access through non-proprietary APIs and protocols",
+        "Open licenses with audit and modification rights",
+        "Architectural transparency and dependency visibility",
+        "EU independence in HPC ecosystem components"
+      ],
+      "questions": [
+        {
+          "id": "SOV6-Q1",
+          "prompt": "How well does the solution interoperate through non-proprietary standards, APIs, and protocols?",
+          "factor": "Interoperability and standards",
+          "sourceSection": "Section 4, SOV-6",
+          "maxPoints": 4
+        },
+        {
+          "id": "SOV6-Q2",
+          "prompt": "How open and auditable is software access, including rights to inspect and adapt where applicable?",
+          "factor": "Openness and audit rights",
+          "sourceSection": "Section 4, SOV-6",
+          "maxPoints": 4
+        },
+        {
+          "id": "SOV6-Q3",
+          "prompt": "How visible are architecture and dependencies, including critical compute ecosystem reliance?",
+          "factor": "Transparency and EU compute independence",
+          "sourceSection": "Section 4, SOV-6",
+          "maxPoints": 4
+        }
+      ]
+    },
+    {
+      "id": "SOV-7",
+      "name": "Security and Compliance Sovereignty",
+      "weight": 10,
+      "description": "Extent to which security operations and compliance execution remain under EU control.",
+      "sourceSection": "Section 2 and Section 4",
+      "contributingFactors": [
+        "Attainment of recognized EU and international certifications",
+        "Adherence to GDPR, NIS2, DORA and related frameworks",
+        "EU-jurisdiction SOC and incident response control",
+        "Transparent breach and vulnerability reporting",
+        "Independent EU audit and maintenance autonomy"
+      ],
+      "questions": [
+        {
+          "id": "SOV7-Q1",
+          "prompt": "How complete is compliance with relevant EU security and regulatory frameworks?",
+          "factor": "Framework and certification coverage",
+          "sourceSection": "Section 4, SOV-7",
+          "maxPoints": 4
+        },
+        {
+          "id": "SOV7-Q2",
+          "prompt": "How strongly are monitoring, SOC, and incident response functions controlled under EU jurisdiction?",
+          "factor": "EU-controlled security operations",
+          "sourceSection": "Section 4, SOV-7",
+          "maxPoints": 4
+        },
+        {
+          "id": "SOV7-Q3",
+          "prompt": "How independently can EU entities audit, patch, and sustain secure operations over time?",
+          "factor": "Audit and maintenance autonomy",
+          "sourceSection": "Section 4, SOV-7",
+          "maxPoints": 4
+        }
+      ]
+    },
+    {
+      "id": "SOV-8",
+      "name": "Environmental Sustainability",
+      "weight": 5,
+      "description": "Long-term sustainability and resilience from energy, materials, and environmental impact perspectives.",
+      "sourceSection": "Section 2 and Section 4",
+      "contributingFactors": [
+        "Energy efficiency and measurable targets",
+        "Circular economy practices",
+        "Transparent reporting of emissions and water usage",
+        "Sourcing of renewable or low-carbon energy"
+      ],
+      "questions": [
+        {
+          "id": "SOV8-Q1",
+          "prompt": "How strong are measurable improvements in infrastructure energy efficiency and PUE targets?",
+          "factor": "Energy efficiency",
+          "sourceSection": "Section 4, SOV-8",
+          "maxPoints": 4
+        },
+        {
+          "id": "SOV8-Q2",
+          "prompt": "How mature are lifecycle and circular economy practices for equipment reuse and end-of-life handling?",
+          "factor": "Circular economy maturity",
+          "sourceSection": "Section 4, SOV-8",
+          "maxPoints": 4
+        },
+        {
+          "id": "SOV8-Q3",
+          "prompt": "How transparent are environmental disclosures and renewable or low-carbon energy sourcing?",
+          "factor": "Transparency and low-carbon sourcing",
+          "sourceSection": "Section 4, SOV-8",
+          "maxPoints": 4
+        }
+      ]
+    }
+  ]
+}
