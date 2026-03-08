@@ -2,30 +2,23 @@ interface SharePanelProps {
   shareLink: string
   copyStatus: 'idle' | 'copied' | 'failed'
   onCopyShareLink: () => void
-  onExportPdf: () => void
 }
 
 export function SharePanel({
   shareLink,
   copyStatus,
   onCopyShareLink,
-  onExportPdf,
 }: SharePanelProps) {
   return (
     <section className="panel share-panel">
       <div className="panel-header">
         <h2>Share Options</h2>
-        <p>
-          Generate a share link or export a short overview optimized for PDF.
-        </p>
+        <p>Generate a share link for the current answers and required seals.</p>
       </div>
 
       <div className="share-actions">
         <button type="button" onClick={onCopyShareLink}>
           Copy Link
-        </button>
-        <button type="button" onClick={onExportPdf}>
-          PDF Export
         </button>
       </div>
 
